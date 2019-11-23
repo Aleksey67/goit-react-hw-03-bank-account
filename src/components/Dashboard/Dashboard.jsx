@@ -10,6 +10,20 @@ class Dashboard extends Component {
     transactions: [],
   };
 
+  componentDidMount() {
+    const transactionsJson = localStorage.getItem('transactions');
+    const transactions = JSON.parse(transactionsJson);
+
+    if (transactionsJson) {
+      this.setState({ transactions });
+    }
+  }
+
+  componentDidUpdate() {
+    const { transactions } = this.state;
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }
+
   addTransaction = transaction => {
     this.setState(prevState => ({
       transactions: [...prevState.transactions, transaction],
